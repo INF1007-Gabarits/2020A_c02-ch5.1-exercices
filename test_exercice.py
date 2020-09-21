@@ -30,7 +30,7 @@ class TestExercice(unittest.TestCase):
 			-4206942.1337
 		]
 		expected = ["{:_.3f}".format(v).replace("_", " ") for v in values]
-		output = [exercice.format_number(v, 3) for v in values]
+		output = [exercice.format_number(v, 3).strip() for v in values]
 
 		self.assertListEqual(
 			output,
@@ -60,7 +60,7 @@ class TestExercice(unittest.TestCase):
 			"+AAAAAAAAA+" "\n"
 			"+++++++++++"
 		]
-		output = [exercice.get_triangle(v) for v in values]
+		output = [exercice.get_triangle(v).strip() for v in values]
 		
 		self.assertListEqual(
 			output,
