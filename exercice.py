@@ -4,15 +4,16 @@
 import random
 
 def get_bill(name, data):
-	ITEM_NAME = 0
-	ITEM_QUANTITY = 1
-	ITEM_PRICE = 2
+	INDEX_NAME = 0
+	INDEX_QUANTITY = 1
+	INDEX_PRICE = 2
+
 	ALIGNMENT = 10
 	TAX_RATE = 0.15
 
 	sum = 0.0
 	for item in data:
-		cost = item[ITEM_QUANTITY] * item[ITEM_PRICE]
+		cost = item[INDEX_QUANTITY] * item[INDEX_PRICE]
 		sum += cost
 	taxes = sum * TAX_RATE
 	total = sum + taxes
@@ -44,15 +45,16 @@ def get_triangle(num_rows):
 	result = border_row
 	for i in range(num_rows):
 		triangle_chars = triangle_char * (i * 2 + 1)
-		result += "\n" + f"{border_char}{triangle_chars : ^{triangle_width}}{border_char}"
+		result += "\n" + f"{border_char}{triangle_chars :^{triangle_width}}{border_char}"
 	result += "\n" + border_row
 
 	return result
 
 
 if __name__ == "__main__":
-	print(get_bill("Äpik Gämmör", [("chaise", 1, 399.99), ("g-fuel", 3, 35.99)]))
+	print(get_bill("Äpik Gämmör", [("chaise", 1, 399.99), ("g-fuel", 69, 35.99)]))
 
 	print(format_number(-12345.678, 2))
 
-	print(get_triangle(4))
+	print(get_triangle(2))
+	print(get_triangle(5))
