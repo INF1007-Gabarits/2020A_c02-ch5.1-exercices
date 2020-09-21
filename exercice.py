@@ -3,34 +3,56 @@
 
 import random
 
-def is_even_len(string):
-	return 0xDEADBEEF
+def get_bill(name, data):
+	ITEM_NAME = 0
+	ITEM_QUANTITY = 1
+	ITEM_PRICE = 2
+	ALIGNMENT = 10
+	TAX_RATE = 0.15
+
+	sum = 0.0
+	for item in data:
+		cost = item[ITEM_QUANTITY] * item[ITEM_PRICE]
+		sum += cost
+	taxes = sum * TAX_RATE
+	total = sum + taxes
+	return f"{name}" "\n" \
+	       f"SOUS TOTAL {sum : >{ALIGNMENT}.2f} $" "\n" \
+	       f"TAXES      {taxes : >{ALIGNMENT}.2f} $" "\n" \
+	       f"TOTAL      {total : >{ALIGNMENT}.2f} $" "\n"
 
 
-def get_num_char(string, char):
-	return 0xDEADBABE
+def format_number(number, num_decimal_digits):
+	decimal_part = abs(number) % 1.0
+	whole_part = int(abs(number))
 
+	result = f"{decimal_part:.{num_decimal_digits}f}"[1:]
+	while whole_part >= 1000:
+		result = f" {whole_part % 1000 :0>3}{result}"
+		whole_part //= 1000
+	result = f"{'-' if number < 0 else ''}{whole_part}{result}"
 
-def get_first_part_of_name(name):
-	return ""
+	return result
 
+def get_triangle(num_rows):
+	border_char = "+"
+	triangle_char = "A"
 
-def get_random_sentence(animals, adjectives, fruits):
-	return ""
+	triangle_width = 1 + (num_rows - 1) * 2
+	border_row = border_char * (triangle_width + 2)
+
+	result = border_row
+	for i in range(num_rows):
+		triangle_chars = triangle_char * (i * 2 + 1)
+		result += "\n" + f"{border_char}{triangle_chars : ^{triangle_width}}{border_char}"
+	result += "\n" + border_row
+
+	return result
 
 
 if __name__ == "__main__":
-	spam = "Bonjour!"
-	parity = "pair" if is_even_len(spam) else "impair"
-	print(f"Le nombre de caractère dans la chaine '{spam}' est {parity}.")
+	print(get_bill("Äpik Gämmör", [("chaise", 1, 399.99), ("g-fuel", 3, 35.99)]))
 
-	eggs = "Hello, world!"
-	print(f"Le nombre d'occurrence de l dans '{eggs}' est : {get_num_char(eggs, 'l')}.")
+	print(format_number(-12345.678, 2))
 
-	parrot = "jean-marc"
-	print(f"Pour {parrot}, on a '{get_first_part_of_name(parrot)}'.")
-
-	animals = ("chevreuil", "chien", "pigeon")
-	adjectives = ("rouge", "officiel", "lourd")
-	fruits = ("pommes", "kiwis", "bananes")
-	print(get_random_sentence(animals, adjectives, fruits))
+	print(get_triangle(4))
